@@ -4,7 +4,7 @@ import numpy as np
 
 class Snake:
     def __init__(self, WIDTH: int, HEIGHT: int, x: int, y: int, width: int, height: int, WIN: pygame.surface.Surface,
-                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=3):
+                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=100):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.x = x
@@ -15,17 +15,23 @@ class Snake:
         self.SQ_SIZE = SQ_SIZE
         self.color = color
 
-        self.snake_parts = []
-        cur_loc = [0, SQ_SIZE*((HEIGHT/SQ_SIZE)/2)]
-        shift_amount = 0
-        for i in range(length):
-            self.snake_parts.append([cur_loc[0] + shift_amount, cur_loc[1]])
-            shift_amount += SQ_SIZE
-        self.snake_parts.reverse()
-
+        self.length = length
         self.moving_to = [1, 0]
         self.direction = "right"
-        self.length = length
+
+        self.snake_parts = []
+        self.create_snake()
+        for snake_part in self.snake_parts:
+            snake_part[0] -= len(self.snake_parts)*SQ_SIZE
+
+    def create_snake(self):
+        self.snake_parts = []
+        cur_loc = [0, self.SQ_SIZE*((self.HEIGHT/self.SQ_SIZE)/2)]
+        shift_amount = 0
+        for i in range(self.length):
+            self.snake_parts.append([cur_loc[0] + shift_amount, cur_loc[1]])
+            shift_amount += self.SQ_SIZE
+        self.snake_parts.reverse()
 
     def draw(self):
         for snake_part in self.snake_parts:
