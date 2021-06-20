@@ -16,11 +16,12 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 board = np.zeros((20, 20))
 
 # create class instances/variables
-gui = Gui()
-snake = Snake()
-clock = pygame.time.Clock()
-FPS = 60
 SQ_SIZE = 20  # how much space will 1 block take up in the screen
+gui = Gui()
+snake = Snake(WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, x=round(WIDTH/2 - SQ_SIZE/2),
+              y=round(HEIGHT/2 - SQ_SIZE/2), WIN=WIN, SQ_SIZE=SQ_SIZE)
+clock = pygame.time.Clock()
+FPS = 24
 
 
 # main loop obj

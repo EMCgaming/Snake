@@ -23,13 +23,18 @@ class Game:
             if event.type == pygame.QUIT or keys[pygame.K_ESCAPE]:
                 pygame.quit()
                 quit(-1)
+            if event.type == pygame.KEYDOWN:
+                self.snake.event_handler(event)
     
     def draw(self):
-        pass
+        self.WIN.fill((0, 0, 0))
+        self.snake.draw()
+        pygame.display.update()
 
     def run(self):
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()
             self.draw()
+            self.snake.move()
 
