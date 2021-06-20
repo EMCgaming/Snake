@@ -34,12 +34,18 @@ class Game:
         self.apple.draw()
         pygame.display.update()
 
+    def collision(self):
+        if self.snake.collide(self.apple):
+            self.snake.add_length(self.apple)
+            self.apple.place_apple()
+        if self.snake.out_of_bounds():
+            print("L")
+
     def run(self):
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()
             self.draw()
             self.snake.move()
-            if self.snake.out_of_bounds():
-                print("L")
+            self.collision()
 

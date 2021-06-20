@@ -4,7 +4,7 @@ import numpy as np
 
 class Snake:
     def __init__(self, WIDTH: int, HEIGHT: int, x: int, y: int, width: int, height: int, WIN: pygame.surface.Surface,
-                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=100):
+                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=4):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.x = x
@@ -86,3 +86,16 @@ class Snake:
         if x < 0 or x >= self.WIDTH or y < 0 or y >= self.HEIGHT:
             return True
         return False
+
+    def collide(self, apple):
+        if (self.snake_parts[0][0], self.snake_parts[0][1]) == (apple.x, apple.y):
+            return True
+        return False
+
+    def add_length(self, apple):
+        new_head = [apple.x, apple.y]
+        self.snake_parts.insert(0, new_head)
+
+
+
+
