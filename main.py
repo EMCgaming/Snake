@@ -8,13 +8,21 @@ import numpy as np
 pygame.init()
 pygame.font.init()
 
+# setup window
+WIDTH, HEIGHT = 600, 600
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# create the board were the info is going to be saved
+board = np.zeros((20, 20))
+
 # create class instances/variables
-Gui = Gui()
-Snake = Snake()
+gui = Gui()
+snake = Snake()
 clock = pygame.time.Clock()
 FPS = 60
+SQ_SIZE = 20  # how much space will 1 block take up in the screen
 
 
 # main loop obj
-Game = Game()
-Game.run()
+game = Game(WIDTH=WIDTH, HEIGHT=HEIGHT, SQ_SIZE=SQ_SIZE, WIN=WIN, board=board, clock=clock, FPS=FPS, snake=snake, gui=gui)
+game.run()
