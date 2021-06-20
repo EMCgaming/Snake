@@ -2,11 +2,12 @@ import pygame
 import numpy as np
 from .Gui import Gui
 from .Snake import Snake
+from .Apple import Apple
 
 
 class Game:
     def __init__(self, WIDTH: int, HEIGHT: int, SQ_SIZE: int, WIN: pygame.surface.Surface, board: np.ndarray,
-                 clock: pygame.time.Clock, FPS: int, snake: Snake, gui: Gui):
+                 clock: pygame.time.Clock, FPS: int, snake: Snake, gui: Gui, apple: Apple):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.SQ_SIZE = SQ_SIZE
@@ -16,6 +17,7 @@ class Game:
         self.FPS = FPS
         self.snake = snake
         self.gui = gui
+        self.apple = apple
         
     def event_handler(self):
         keys = pygame.key.get_pressed()
@@ -29,6 +31,7 @@ class Game:
     def draw(self):
         self.WIN.fill((0, 0, 0))
         self.snake.draw()
+        self.apple.draw()
         pygame.display.update()
 
     def run(self):
