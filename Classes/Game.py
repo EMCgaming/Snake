@@ -37,7 +37,7 @@ class Game:
     def collision(self):
         if self.snake.collide(self.apple):
             self.snake.add_length(self.apple)
-            self.apple.place_apple()
+            self.apple.place_apple(self.snake)
             self.score += 1
             pygame.display.set_caption(f"""collected apples: {self.score}""")
         elif self.snake.out_of_bounds():
