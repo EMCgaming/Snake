@@ -91,6 +91,14 @@ class Snake:
             return True
         return False
 
+    def self_collide(self):
+        snake_parts = self.snake_parts[:]
+        snake_parts.pop(0)
+        for snake_part in snake_parts:
+            if self.snake_parts[0][0] == snake_part[0] and self.snake_parts[0][1] == snake_part[1]:
+                return True
+        return False
+
     def add_length(self, apple):
         new_head = [apple.x, apple.y]
         self.snake_parts.insert(0, new_head)

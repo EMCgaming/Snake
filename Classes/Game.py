@@ -38,6 +38,8 @@ class Game:
             self.apple.place_apple()
         if self.snake.out_of_bounds():
             print("L")
+        if self.snake.self_collide():
+            print("L")
 
     def run(self):
         while True:
