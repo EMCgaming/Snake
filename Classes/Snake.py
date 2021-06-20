@@ -3,7 +3,7 @@ import pygame
 
 class Snake:
     def __init__(self, WIDTH: int, HEIGHT: int, x: int, y: int, width: int, height: int, WIN: pygame.surface.Surface,
-                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=4):
+                 SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=1):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.x = x

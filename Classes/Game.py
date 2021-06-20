@@ -16,6 +16,8 @@ class Game:
         self.snake = snake
         self.gui = gui
         self.apple = apple
+
+        self.score = 0
         
     def event_handler(self):
         keys = pygame.key.get_pressed()
@@ -36,12 +38,16 @@ class Game:
         if self.snake.collide(self.apple):
             self.snake.add_length(self.apple)
             self.apple.place_apple()
+            self.score += 1
+            pygame.display.set_caption(f"""collected apples: {self.score}""")
         if self.snake.out_of_bounds():
             print("L")
         if self.snake.self_collide():
             print("L")
 
     def run(self):
+        self.score = 0
+        pygame.display.set_caption(f"""collected apples: {self.score}""")
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()
