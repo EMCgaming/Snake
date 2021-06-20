@@ -15,21 +15,20 @@ class Snake:
         self.SQ_SIZE = SQ_SIZE
         self.color = color
 
-        self.snake_parts = [
-            [0, SQ_SIZE*15],
-            [0 + SQ_SIZE, SQ_SIZE*15],
-            [0 + SQ_SIZE + SQ_SIZE, SQ_SIZE*15],
-            [0 + SQ_SIZE + SQ_SIZE + SQ_SIZE, SQ_SIZE*15]
-        ]
+        self.snake_parts = []
+        cur_loc = [0, SQ_SIZE*((HEIGHT/SQ_SIZE)/2)]
+        shift_amount = 0
+        for i in range(length):
+            self.snake_parts.append([cur_loc[0] + shift_amount, cur_loc[1]])
+            shift_amount += SQ_SIZE
+        self.snake_parts.reverse()
 
         self.moving_to = [1, 0]
-
         self.length = length
 
     def draw(self):
         for snake_part in self.snake_parts:
-            pygame.draw.rect(self.WIN, self.color,
-                             pygame.Rect(snake_part[0], snake_part[1], self.SQ_SIZE - 3, self.SQ_SIZE - 3), 2)
+            pygame.draw.rect(self.WIN, self.color, pygame.Rect(snake_part[0], snake_part[1], self.SQ_SIZE - 3, self.SQ_SIZE - 3), 2)
 
     def event_handler(self, event: pygame.event.Event):
         if event.key == pygame.K_w or event.key == pygame.K_UP:  # move up
@@ -42,16 +41,32 @@ class Snake:
             self.moving_to = [-1, 0]
 
     def move(self):
-        self.snake_parts.pop(self.snake_parts.index(self.snake_parts[-1]))
-        x, y = self.snake_parts[0][0], self.snake_parts[0][1]
-        if self.moving_to == [0, 1]:  # move up
-            y -= self.SQ_SIZE
-        elif self.moving_to == [0, -1]:  # move down
-            y += self.SQ_SIZE
-        elif self.moving_to == [1, 0]:  # move right
-            x += self.SQ_SIZE
-        elif self.moving_to == [-1, 0]:  # move left
-            x -= self.SQ_SIZE
-        self.snake_parts.insert(0, [x, y])
-        print(self.snake_parts[0])
+        # if the snake size is more than 1
+        if len(self.snake_parts) > 1:
+            self.snake_parts.pop(self.snake_parts.index(self.snake_parts[-1]))
+            x, y = self.snake_parts[0][0], self.snake_parts[0][1]
+            if self.moving_to == [0, 1]:  # move up
+                y -= self.SQ_SIZE
+            elif self.moving_to == [0, -1]:  # move down
+                y += self.SQ_SIZE
+            elif self.moving_to == [1, 0]:  # move right
+                x += self.SQ_SIZE
+            elif self.moving_to == [-1, 0]:  # move left
+                x -= self.SQ_SIZE
+            self.snake_parts.insert(0, [x, y])
+        # if the length of the snake is 1
+        else:
+            temp_snake_part = self.snake_parts[0]
+            self.snake_parts.pop(self.snake_parts.index(self.snake_parts[-1]))
+            x, y = temp_snake_part[0], temp_snake_part[1]
+            if self.moving_to == [0, 1]:  # move up
+                y -= self.SQ_SIZE
+            elif self.moving_to == [0, -1]:  # move down
+                y += self.SQ_SIZE
+            elif self.moving_to == [1, 0]:  # move right
+                x += self.SQ_SIZE
+            elif self.moving_to == [-1, 0]:  # move left
+                x -= self.SQ_SIZE
+            self.snake_parts.insert(0, [x, y])
+
 

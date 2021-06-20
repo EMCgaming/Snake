@@ -21,7 +21,7 @@ gui = Gui()
 snake = Snake(WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, x=round(WIDTH/2 - SQ_SIZE/2),
               y=round(HEIGHT/2 - SQ_SIZE/2), WIN=WIN, SQ_SIZE=SQ_SIZE)
 clock = pygame.time.Clock()
-FPS = 24
+FPS = 12
 
 
 # main loop obj
