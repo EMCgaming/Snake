@@ -3,7 +3,6 @@ from Classes import Game
 from Classes import Gui
 from Classes import Snake
 from Classes import Apple
-import numpy as np
 
 # initialize pygame
 pygame.init()
@@ -12,9 +11,6 @@ pygame.font.init()
 # setup window
 WIDTH, HEIGHT = 600, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-
-# create the board were the info is going to be saved
-board = np.zeros((20, 20))
 
 # create class instances/variables
 SQ_SIZE = 20  # how much space will 1 block take up in the screen
@@ -27,6 +23,6 @@ FPS = 12
 
 
 # main loop obj
-game = Game(WIDTH=WIDTH, HEIGHT=HEIGHT, SQ_SIZE=SQ_SIZE, WIN=WIN, board=board, clock=clock, FPS=FPS, snake=snake,
+game = Game(WIDTH=WIDTH, HEIGHT=HEIGHT, SQ_SIZE=SQ_SIZE, WIN=WIN, clock=clock, FPS=FPS, snake=snake,
             gui=gui, apple=apple)
 game.run()
