@@ -17,6 +17,8 @@ class Game:
         self.gui = gui
         self.apple = apple
 
+        self.font = pygame.font.SysFont("comicsans", 70)
+
         self.score = 0
         
     def event_handler(self):
@@ -39,15 +41,31 @@ class Game:
             self.snake.add_length(self.apple)
             self.apple.place_apple(self.snake)
             self.score += 1
-            pygame.display.set_caption(f"""collected apples: {self.score}""")
+            pygame.display.set_caption(f"""stored apples: {self.score}""")
         elif self.snake.out_of_bounds():
-            print("L")
+            self.loss()
         elif self.snake.self_collide():
-            print("L")
+            self.loss()
+
+    def loss(self):
+        while True:
+            self.clock.tick(self.FPS)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or pygame.key.get_pressed()[pygame.K_ESCAPE]:
+                    pygame.quit()
+                    quit(-1)
+                if event.type == pygame.KEYDOWN:
+                    self.snake.recreate()
+                    self.apple.place_apple(self.snake)
+                    self.run()
+
+            score_label = self.font.render(f"""your score: {self.score}""", True, (255, 0, 0))
+            self.WIN.blit(score_label, (self.WIDTH/2 - score_label.get_width()/2, self.HEIGHT/2 - score_label.get_height()/2))
+            pygame.display.update()
 
     def run(self):
         self.score = 0
-        pygame.display.set_caption(f"""collected apples: {self.score}""")
+        pygame.display.set_caption(f"""stored apples: {self.score}""")
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()

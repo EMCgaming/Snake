@@ -15,8 +15,7 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 # create class instances/variables
 SQ_SIZE = 20  # how much space will 1 block take up in the screen
 gui = Gui()
-snake = Snake(WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, x=round(WIDTH/2 - SQ_SIZE/2),
-              y=round(HEIGHT/2 - SQ_SIZE/2), WIN=WIN, SQ_SIZE=SQ_SIZE)
+snake = Snake(WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, WIN=WIN, SQ_SIZE=SQ_SIZE)
 apple = Apple(SQ_SIZE=SQ_SIZE, WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, WIN=WIN, snake=snake)
 clock = pygame.time.Clock()
 FPS = 12

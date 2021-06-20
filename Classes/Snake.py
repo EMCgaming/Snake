@@ -2,12 +2,10 @@ import pygame
 
 
 class Snake:
-    def __init__(self, WIDTH: int, HEIGHT: int, x: int, y: int, width: int, height: int, WIN: pygame.surface.Surface,
+    def __init__(self, WIDTH: int, HEIGHT: int, width: int, height: int, WIN: pygame.surface.Surface,
                  SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=1):
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
-        self.x = x
-        self.y = y
         self.width = width
         self.height = height
         self.WIN = WIN
@@ -31,6 +29,16 @@ class Snake:
             self.snake_parts.append([cur_loc[0] + shift_amount, cur_loc[1]])
             shift_amount += self.SQ_SIZE
         self.snake_parts.reverse()
+
+    def recreate(self):
+        self.length = 1
+        self.moving_to = [1, 0]
+        self.direction = "right"
+
+        self.snake_parts = []
+        self.create_snake()
+        for snake_part in self.snake_parts:
+            snake_part[0] -= len(self.snake_parts)*self.SQ_SIZE
 
     def draw(self):
         for snake_part in self.snake_parts:
