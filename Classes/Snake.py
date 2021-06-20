@@ -24,6 +24,7 @@ class Snake:
         self.snake_parts.reverse()
 
         self.moving_to = [1, 0]
+        self.direction = "right"
         self.length = length
 
     def draw(self):
@@ -31,14 +32,18 @@ class Snake:
             pygame.draw.rect(self.WIN, self.color, pygame.Rect(snake_part[0], snake_part[1], self.SQ_SIZE - 3, self.SQ_SIZE - 3), 2)
 
     def event_handler(self, event: pygame.event.Event):
-        if event.key == pygame.K_w or event.key == pygame.K_UP:  # move up
+        if event.key == pygame.K_w and not self.direction == "down" or event.key == pygame.K_UP and not self.direction == "down":  # move up
             self.moving_to = [0, 1]
-        elif event.key == pygame.K_s or event.key == pygame.K_DOWN:  # move down
+            self.direction = "up"
+        elif event.key == pygame.K_s and not self.direction == "up" or event.key == pygame.K_DOWN and not self.direction == "up":  # move down
             self.moving_to = [0, -1]
-        elif event.key == pygame.K_d or event.key == pygame.K_RIGHT:  # move right
+            self.direction = "down"
+        elif event.key == pygame.K_d and not self.direction == "left" or event.key == pygame.K_RIGHT and not self.direction == "left":  # move right
             self.moving_to = [1, 0]
-        elif event.key == pygame.K_a or event.key == pygame.K_LEFT:  # move left
+            self.direction = "right"
+        elif event.key == pygame.K_a and not self.direction == "right" or event.key == pygame.K_LEFT and not self.direction == "right":  # move left
             self.moving_to = [-1, 0]
+            self.direction = "left"
 
     def move(self):
         # if the snake size is more than 1
