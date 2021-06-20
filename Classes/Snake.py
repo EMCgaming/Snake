@@ -69,4 +69,9 @@ class Snake:
                 x -= self.SQ_SIZE
             self.snake_parts.insert(0, [x, y])
 
-
+    def out_of_bounds(self):
+        x = self.snake_parts[0][0]
+        y = self.snake_parts[0][1]
+        if x < 0 or x >= self.WIDTH or y < 0 or y >= self.HEIGHT:
+            return True
+        return False

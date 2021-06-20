@@ -37,4 +37,6 @@ class Game:
             self.event_handler()
             self.draw()
             self.snake.move()
+            if self.snake.out_of_bounds():
+                print("L")
 
