@@ -40,9 +40,9 @@ class Game:
             self.apple.place_apple()
             self.score += 1
             pygame.display.set_caption(f"""collected apples: {self.score}""")
-        if self.snake.out_of_bounds():
+        elif self.snake.out_of_bounds():
             print("L")
-        if self.snake.self_collide():
+        elif self.snake.self_collide():
             print("L")
 
     def run(self):
