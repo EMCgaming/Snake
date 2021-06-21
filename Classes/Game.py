@@ -70,21 +70,21 @@ class Game:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 is_clicked = self.shop.is_over()
                 if is_clicked is not False:
-                    if self.shop.upgrades[is_clicked][7] == 1:
+                    if self.shop.upgrades[is_clicked][8] == 1:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
                             self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 2)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
                             self.FPS += 1
-                    if self.shop.upgrades[is_clicked][7] == 2:
+                    if self.shop.upgrades[is_clicked][8] == 2:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
                             self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 2)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
                             self.FPS -= 1
-                    if self.shop.upgrades[is_clicked][7] == 3:
+                    if self.shop.upgrades[is_clicked][8] == 3:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 10:
                             self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 10)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 10
@@ -157,6 +157,7 @@ class Game:
             upgrade[5] = 1
         self.FPS = self.original_FPS
         self.apple.apples_on_screen = 1
+        self.apple.place_apple(self.snake)
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()
