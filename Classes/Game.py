@@ -32,8 +32,13 @@ class Game:
     
     def draw(self):
         self.WIN.fill((0, 0, 0))
+        for row in range(round(self.WIDTH/self.SQ_SIZE)):
+            for column in range(round(self.HEIGHT/self.SQ_SIZE)):
+                pygame.draw.rect(self.WIN, (30, 30, 30), pygame.Rect((row*self.SQ_SIZE, column*self.SQ_SIZE, self.SQ_SIZE - 3, self.SQ_SIZE - 3)), 2)
+
         self.snake.draw()
         self.apple.draw()
+
         pygame.display.update()
 
     def collision(self):
@@ -72,4 +77,3 @@ class Game:
             self.draw()
             self.snake.move()
             self.collision()
-
