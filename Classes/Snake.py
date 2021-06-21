@@ -41,7 +41,7 @@ class Snake:
         :return: None
         """
         self.snake_parts = []
-        cur_loc = [0, self.SQ_SIZE*((self.HEIGHT/self.SQ_SIZE)/2)]
+        cur_loc = [0, int(self.SQ_SIZE*((self.HEIGHT/self.SQ_SIZE)/2))]
         shift_amount = 0
         for i in range(self.length):
             self.snake_parts.append([cur_loc[0] + shift_amount, cur_loc[1]])
@@ -135,14 +135,15 @@ class Snake:
             return True
         return False
 
-    def collide(self, apple):
+    def collide(self, apple_obj):
         """
         it checks for collision between the snake and the apple
-        :param apple: Apple
+        :param apple_obj: Apple
         :return: bool
         """
-        if (self.snake_parts[0][0], self.snake_parts[0][1]) == (apple.x, apple.y):
-            return True
+        for apple in apple_obj.apples:
+            if [self.snake_parts[0][0], self.snake_parts[0][1]] == apple:
+                return apple_obj.apples.index(apple)
         return False
 
     def self_collide(self):
@@ -157,13 +158,17 @@ class Snake:
                 return True
         return False
 
-    def add_length(self, apple):
+    def add_length(self, snake_collided_with_apple_index, apple_obj):
         """
         it adds 1 length to the snake
-        :param apple: Apple
+        :param snake_collided_with_apple_index: Apple
+        :param apple_obj: Apple
         :return: None
         """
-        new_head = [apple.x, apple.y]
+        new_head = [
+            apple_obj.apples[snake_collided_with_apple_index][0],  # x
+            apple_obj.apples[snake_collided_with_apple_index][1]   # y
+        ]
         self.snake_parts.insert(0, new_head)
 
     def remove_length(self, amount: int):

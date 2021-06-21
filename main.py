@@ -19,8 +19,9 @@ snake = Snake(WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, WIN=WIN
 apple = Apple(SQ_SIZE=SQ_SIZE, WIDTH=WIDTH, HEIGHT=HEIGHT, width=SQ_SIZE, height=SQ_SIZE, WIN=WIN, snake=snake)
 upgrades = [
     # x | y | width | height | color | lvl | text (new line with '|') | logic
-    [EXTRA_WIDTH/2 - 80/2, 10, 80, 80, (30, 30, 30), 0, "+1|speed", 1],
-    [EXTRA_WIDTH/2 - 80/2, 100, 80, 80, (30, 30, 30), 0, "-1|speed", 2]
+    [EXTRA_WIDTH/2 - 80/2, 10, 80, 80, (30, 30, 30), 1, "+1|speed", 1],  # 1 for higher FPS
+    [EXTRA_WIDTH/2 - 80/2, 100, 80, 80, (30, 30, 30), 1, "-1|speed", 2],  # 2 for lower FPS
+    [EXTRA_WIDTH/2 - 80/2, 190, 80, 80, (30, 30, 30), 1, "more|apples", 3]  # 3 for more apples on screen
 ]
 shop = Shop(screen_size=screen_size, upgrades=upgrades, WIN=WIN)
 clock = pygame.time.Clock()

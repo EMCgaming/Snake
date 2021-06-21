@@ -38,6 +38,7 @@ class Game:
         self.WIN = WIN
         self.clock = clock
         self.FPS = FPS
+        self.original_FPS = FPS
         self.snake = snake
         self.apple = apple
         self.shop = shop
@@ -88,7 +89,6 @@ class Game:
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 10
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
-                            pass
 
     def draw(self):
         """
@@ -100,8 +100,8 @@ class Game:
             for column in range(round(self.HEIGHT/self.SQ_SIZE)):
                 pygame.draw.rect(self.WIN, (30, 30, 30), pygame.Rect((row*self.SQ_SIZE, column*self.SQ_SIZE, self.SQ_SIZE - 3, self.SQ_SIZE - 3)), 2)
 
-        self.snake.draw()
         self.apple.draw()
+        self.snake.draw()
         self.shop.draw()
 
         pygame.display.update()
@@ -111,9 +111,11 @@ class Game:
         this method checks for collision with the snake and the bound/apple/itself
         :return: None
         """
-        if self.snake.collide(self.apple):
-            self.snake.add_length(self.apple)
-            self.apple.place_apple(self.snake)
+        snake_collided_with_apple_index = self.snake.collide(self.apple)
+        if snake_collided_with_apple_index is not False:
+            print(True)
+            self.snake.add_length(snake_collided_with_apple_index, self.apple)
+            self.apple.place_apple(self.snake, snake_collided_with_apple_index)
             self.apples_stored += 1
             self.score += 1
             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
@@ -150,7 +152,9 @@ class Game:
         self.apples_stored = 0
         pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
         for upgrade in self.shop.upgrades:
-            upgrade[5] = 0
+            upgrade[5] = 1
+        self.FPS = self.original_FPS
+        self.apple.apples_on_screen = 1
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()

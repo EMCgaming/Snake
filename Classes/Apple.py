@@ -26,28 +26,49 @@ class Apple:
         self.height = height
         self.WIN = WIN
         self.color = color
-        self.x = 0
-        self.y = 0
+
+        self.apples_on_screen = 1
+        self.apples = []
+
         self.place_apple(snake)
 
-    def place_apple(self, snake):
-        """
+    def place_apple(self, snake, snake_collided_with_apple_index: int = None):
+        """snake_collided_with_apple_tuple
         this method tries to find a place to put the apple it has a loop so
         it wont stop until it finds it
+        :param snake: Snake
+        :param snake_collided_with_apple_index: int
         :return: None
         """
-        while True:
-            x = random.randrange(0, self.WIDTH / self.SQ_SIZE) * self.SQ_SIZE
-            y = random.randrange(0, self.HEIGHT / self.SQ_SIZE) * self.SQ_SIZE
+        if snake_collided_with_apple_index is None:
+            self.apples.clear()
+            for i in range(self.apples_on_screen):
+                while True:
+                    new_apple_loc = [
+                        random.randrange(0, self.WIDTH / self.SQ_SIZE) * self.SQ_SIZE,
+                        random.randrange(0, self.HEIGHT / self.SQ_SIZE) * self.SQ_SIZE
+                    ]
 
-            if not [x, y] in snake.snake_parts:
-                self.x = x
-                self.y = y
-                return
+                    if new_apple_loc not in snake.snake_parts and new_apple_loc not in self.apples:
+                        self.apples.append(new_apple_loc)
+                        break
+
+        elif snake_collided_with_apple_index is not None:
+            self.apples.pop(snake_collided_with_apple_index)
+            while True:
+                new_apple_loc = [
+                    random.randrange(0, self.WIDTH / self.SQ_SIZE) * self.SQ_SIZE,
+                    random.randrange(0, self.HEIGHT / self.SQ_SIZE) * self.SQ_SIZE
+                ]
+
+                if new_apple_loc not in snake.snake_parts and new_apple_loc not in self.apples:
+                    self.apples.append(new_apple_loc)
+                    break
 
     def draw(self):
         """
         it draws the apple
         :return:
         """
-        pygame.draw.rect(self.WIN, self.color, pygame.Rect(self.x, self.y, self.width - 3, self.height - 3), 2)
+        for apple in self.apples:
+            pygame.draw.rect(self.WIN, self.color, pygame.Rect(apple[0], apple[1], self.width - 3, self.height - 3), 2)
