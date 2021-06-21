@@ -65,6 +65,22 @@ class Apple:
                     self.apples.append(new_apple_loc)
                     break
 
+    def create_new_apple(self, snake):
+        """
+        it adds a new apple to the screen
+        :param snake: Snake
+        :return: None
+        """
+        while True:
+            new_apple_loc = [
+                random.randrange(0, self.WIDTH / self.SQ_SIZE) * self.SQ_SIZE,
+                random.randrange(0, self.HEIGHT / self.SQ_SIZE) * self.SQ_SIZE
+            ]
+
+            if new_apple_loc not in snake.snake_parts and new_apple_loc not in self.apples:
+                self.apples.append(new_apple_loc)
+                break
+
     def draw(self):
         """
         it draws the apple

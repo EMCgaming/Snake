@@ -86,9 +86,12 @@ class Game:
                             self.FPS -= 1
                     if self.shop.upgrades[is_clicked][7] == 3:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 10:
+                            self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 10)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 10
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
+                            self.apple.apples_on_screen += 1
+                            self.apple.create_new_apple(self.snake)
 
     def draw(self):
         """
@@ -113,7 +116,6 @@ class Game:
         """
         snake_collided_with_apple_index = self.snake.collide(self.apple)
         if snake_collided_with_apple_index is not False:
-            print(True)
             self.snake.add_length(snake_collided_with_apple_index, self.apple)
             self.apple.place_apple(self.snake, snake_collided_with_apple_index)
             self.apples_stored += 1
