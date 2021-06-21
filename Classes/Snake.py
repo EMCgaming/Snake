@@ -166,6 +166,10 @@ class Snake:
         new_head = [apple.x, apple.y]
         self.snake_parts.insert(0, new_head)
 
+    def remove_length(self, amount: int):
+        for i in range(amount):
+            self.snake_parts.pop()
+
 
 
 

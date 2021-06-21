@@ -71,12 +71,14 @@ class Game:
                 if is_clicked is not False:
                     if self.shop.upgrades[is_clicked][7] == 1:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
+                            self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 2)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
                             self.FPS += 1
                     if self.shop.upgrades[is_clicked][7] == 2:
                         if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
+                            self.snake.remove_length(self.shop.upgrades[is_clicked][5] * 2)
                             self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
                             self.shop.upgrades[is_clicked][5] += 1
                             pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
