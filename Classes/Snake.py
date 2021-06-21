@@ -4,6 +4,19 @@ import pygame
 class Snake:
     def __init__(self, WIDTH: int, HEIGHT: int, width: int, height: int, WIN: pygame.surface.Surface,
                  SQ_SIZE: int, color: tuple = (255, 0, 0), length: int=1):
+        """
+        Parameters
+        ----------
+
+        :param WIDTH: int
+        :param HEIGHT: int
+        :param width: int
+        :param height: int
+        :param WIN: pygame.surface.Surface
+        :param SQ_SIZE: int
+        :param color: tuple = (255, 0, 0)
+        :param length: int=1
+        """
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
         self.width = width
@@ -22,6 +35,11 @@ class Snake:
             snake_part[0] -= len(self.snake_parts)*SQ_SIZE
 
     def create_snake(self):
+        """
+        this function creates the snake based on the length and it
+        places it on the left mid of the screen
+        :return: None
+        """
         self.snake_parts = []
         cur_loc = [0, self.SQ_SIZE*((self.HEIGHT/self.SQ_SIZE)/2)]
         shift_amount = 0
@@ -31,6 +49,11 @@ class Snake:
         self.snake_parts.reverse()
 
     def recreate(self):
+        """
+        this method sets the snake length to 1 reset the directions
+        and then it creates the snake
+        :return: None
+        """
         self.length = 1
         self.moving_to = [1, 0]
         self.direction = "right"
@@ -41,10 +64,19 @@ class Snake:
             snake_part[0] -= len(self.snake_parts)*self.SQ_SIZE
 
     def draw(self):
+        """
+        it draws the snake in the screen
+        :return:
+        """
         for snake_part in self.snake_parts:
             pygame.draw.rect(self.WIN, self.color, pygame.Rect(snake_part[0], snake_part[1], self.SQ_SIZE - 3, self.SQ_SIZE - 3), 2)
 
     def event_handler(self, event: pygame.event.Event):
+        """
+        it handles the necessary events for the snake
+        :param event: pygame.event.Event
+        :return: None
+        """
         if event.key == pygame.K_w and not self.direction == "down" or event.key == pygame.K_UP and not self.direction == "down":  # move up
             self.moving_to = [0, 1]
             self.direction = "up"
@@ -59,6 +91,11 @@ class Snake:
             self.direction = "left"
 
     def move(self):
+        """
+        it moves the snake to the direction that the use has chose
+        if the length is bigger than 1 then it removes the last parts and adds it to the front
+        :return: None
+        """
         # if the snake size is more than 1
         if len(self.snake_parts) > 1:
             self.snake_parts.pop(self.snake_parts.index(self.snake_parts[-1]))
@@ -88,6 +125,10 @@ class Snake:
             self.snake_parts.insert(0, [x, y])
 
     def out_of_bounds(self):
+        """
+        it checks if the head is out of the main board
+        :return: bool
+        """
         x = self.snake_parts[0][0]
         y = self.snake_parts[0][1]
         if x < 0 or x >= self.WIDTH or y < 0 or y >= self.HEIGHT:
@@ -95,11 +136,20 @@ class Snake:
         return False
 
     def collide(self, apple):
+        """
+        it checks for collision between the snake and the apple
+        :param apple: Apple
+        :return: bool
+        """
         if (self.snake_parts[0][0], self.snake_parts[0][1]) == (apple.x, apple.y):
             return True
         return False
 
     def self_collide(self):
+        """
+        it checks if the snake has collided with itself
+        :return: None
+        """
         snake_parts = self.snake_parts[:]
         snake_parts.pop(0)
         for snake_part in snake_parts:
@@ -108,6 +158,11 @@ class Snake:
         return False
 
     def add_length(self, apple):
+        """
+        it adds 1 length to the snake
+        :param apple: Apple
+        :return: None
+        """
         new_head = [apple.x, apple.y]
         self.snake_parts.insert(0, new_head)
 
