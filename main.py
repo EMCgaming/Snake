@@ -8,8 +8,8 @@ pygame.init()
 pygame.font.init()
 
 # setup window
-WIDTH, HEIGHT = 600, 600
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIDTH, HEIGHT, EXTRA_WIDTH = 600, 600, 100
+WIN = pygame.display.set_mode((WIDTH + EXTRA_WIDTH, HEIGHT))
 
 # create class instances/variables
 SQ_SIZE = 20  # how much space will 1 block take up in the screen
