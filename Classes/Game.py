@@ -1,6 +1,7 @@
 import pygame
-from .Snake import Snake
-from .Apple import Apple
+from . import Shop
+from . import Snake
+from . import Apple
 
 
 class Game:
@@ -17,7 +18,7 @@ class Game:
     :param apple: Apple
     """
     def __init__(self, WIDTH: int, HEIGHT: int, SQ_SIZE: int, WIN: pygame.surface.Surface, clock: pygame.time.Clock,
-                 FPS: int, snake: Snake, apple: Apple):
+                 FPS: int, snake: Snake, apple: Apple, shop: Shop):
         """
         Parameters
         ----------
@@ -29,6 +30,7 @@ class Game:
         :param FPS: int
         :param snake: Snake
         :param apple: Apple
+        :param shop: Shop
         """
         self.WIDTH = WIDTH
         self.HEIGHT = HEIGHT
@@ -38,9 +40,18 @@ class Game:
         self.FPS = FPS
         self.snake = snake
         self.apple = apple
+        self.shop = shop
+
+        self.shop_logic = {
+            1: "+FPS",
+            2: "-FPS",
+            3: "more-apples-screen"
+
+        }
 
         self.font = pygame.font.SysFont("comicsans", 70)
 
+        self.apples_stored = 0
         self.score = 0
         
     def event_handler(self):
@@ -55,7 +66,28 @@ class Game:
                 quit(-1)
             if event.type == pygame.KEYDOWN:
                 self.snake.event_handler(event)
-    
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                is_clicked = self.shop.is_over()
+                if is_clicked is not False:
+                    if self.shop.upgrades[is_clicked][7] == 1:
+                        if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
+                            self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
+                            self.shop.upgrades[is_clicked][5] += 1
+                            pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
+                            self.FPS += 1
+                    if self.shop.upgrades[is_clicked][7] == 2:
+                        if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 2:
+                            self.apples_stored -= self.shop.upgrades[is_clicked][5] * 2
+                            self.shop.upgrades[is_clicked][5] += 1
+                            pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
+                            self.FPS -= 1
+                    if self.shop.upgrades[is_clicked][7] == 3:
+                        if self.apples_stored >= self.shop.upgrades[is_clicked][5] * 10:
+                            self.apples_stored -= self.shop.upgrades[is_clicked][5] * 10
+                            self.shop.upgrades[is_clicked][5] += 1
+                            pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
+                            pass
+
     def draw(self):
         """
         the method that draws everything that is needed
@@ -68,6 +100,7 @@ class Game:
 
         self.snake.draw()
         self.apple.draw()
+        self.shop.draw()
 
         pygame.display.update()
 
@@ -79,8 +112,9 @@ class Game:
         if self.snake.collide(self.apple):
             self.snake.add_length(self.apple)
             self.apple.place_apple(self.snake)
+            self.apples_stored += 1
             self.score += 1
-            pygame.display.set_caption(f"""stored apples: {self.score}""")
+            pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
         elif self.snake.out_of_bounds():
             self.loss()
         elif self.snake.self_collide():
@@ -92,8 +126,8 @@ class Game:
         keeps the snake and the apple were it is and it doesnt change it
          :return: None
         """
-        score_label = self.font.render(f"""your score: {self.score}""", True, (255, 0, 0))
-        self.WIN.blit(score_label, (self.WIDTH/2 - score_label.get_width()/2, self.HEIGHT/2 - score_label.get_height()/2))
+        apples_stored_label = self.font.render(f"""your score: {self.score}""", True, (255, 0, 0))
+        self.WIN.blit(apples_stored_label, (self.WIDTH/2 - apples_stored_label.get_width()/2, self.HEIGHT/2 - apples_stored_label.get_height()/2))
         pygame.display.update()
         while True:
             self.clock.tick(self.FPS)
@@ -111,8 +145,10 @@ class Game:
         this is the main loop method that is run when the use wants to start/restart the game
         :return:
         """
-        self.score = 0
-        pygame.display.set_caption(f"""stored apples: {self.score}""")
+        self.apples_stored = 0
+        pygame.display.set_caption(f"""stored apples: {self.apples_stored}""")
+        for upgrade in self.shop.upgrades:
+            upgrade[5] = 0
         while True:
             self.clock.tick(self.FPS)
             self.event_handler()
